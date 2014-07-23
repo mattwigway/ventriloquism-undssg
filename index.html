@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ventriloquism</title>
+    <script type="text/javascript">
+
+      var slides = [
+	  'Introduction to Ventriloquism<br/>Matt Conway',
+	  'A window to the world',
+	  'Take the last train to Los Angeles',
+	  'Best morning to find valet parking',
+	  'Very funny',
+	  'Now you know as much as most ventriloquists',
+	  'The limit of a quotient is the quotient of the limits',
+	  'The limit of a quotient is the quotient of the limits, provided the limits exist.',
+	  'Best morning to find valet parking'
+      ];
+
+      var index = -1;
+
+      function next() {
+	  if (index + 1 < slides.length) {
+	      index++;
+	      document.getElementById('text').innerHTML = slides[index];
+	  }
+      }
+	  
+      function prev() {
+	  if (index - 1 >= 0) {
+	      index--;
+	      document.getElementById('text').innerHTML = slides[index];
+	  }
+      }
+
+
+      function keyPress (e) {
+	  var k = e.keyCode;
+	  var c = e.charCode;
+	  console.log(k);
+	  if (c == 32 || k == 39 || k == 40) {next(); return false;}
+	  if (k == 37 || k == 38) {prev(); return false;}
+      }
+	  
+      function init() {
+          var vid = document.getElementById('vid');
+
+	  navigator.mozGetUserMedia({video: true, audio: false},
+		       function (stream) {
+			   vid.src = window.URL.createObjectURL(stream);
+			   console.log('opened camera');
+		       },
+		       function () {
+			   alert('Opening camera failed');
+		       }
+		      );
+
+	  next();
+
+	  document.getElementsByTagName('body')[0].onkeypress=keyPress;
+      }	  
+      </script>
+  </head>
+  <body onload="init()">
+    <video width="100%" height="100%" style="padding: 0px; margin: 0px" id="vid" autoplay></video>
+    <div id="text" style="z-index: 1; position: fixed; bottom: 40px; left: 100px; font-family: sans; font-size: 70px; font-weight: bold" ></div>
+  </body>
+</html>
+      
