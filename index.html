@@ -55,7 +55,7 @@ video {
       function init() {
           var vid = document.getElementById('vid');
 
-	  navigator.mozGetUserMedia({video: true, audio: false},
+	  navigator.mediaDevices.getUserMedia({video: true, audio: false},
 		       function (stream) {
 			   vid.src = window.URL.createObjectURL(stream);
 			   console.log('opened camera');
